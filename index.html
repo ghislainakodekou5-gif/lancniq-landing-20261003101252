@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#09090B">
+  <title>Coaching sportif — Transformez votre physique</title>
+  <meta name="description" content="Découvrez un accompagnement sportif adapté à votre emploi du temps, à votre niveau et à vos objectifs. Regardez la présentation et faites le premier pas.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:title" content="Transformez votre physique sans passer votre vie à la salle de sport.">
+  <meta property="og:description" content="Un accompagnement adapté à votre emploi du temps, à votre niveau et à vos objectifs.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: {
+      colors: { ink: '#09090B', panel: '#121215', accent: '#FF7A1A' },
+      fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'] }
+    } } };
+    // CONFIGURATION : remplacer les valeurs vides avant publication.
+    window.PAGE_CONFIG = {
+      // URL YouTube, Vimeo ou URL directe d'un fichier MP4/WebM.
+      // Pour une vidéo Vimeo non répertoriée, conserver son identifiant privé dans l'URL.
+      videoUrl: '',
+      bookingUrl: '',
+      // Photographie illustrative provisoire, non présentée comme un client ou le coach.
+      posterUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1600&q=85',
+      // Sous-titres WebVTT pour les fichiers hébergés. Vérifier les règles CORS du serveur.
+      captionsUrl: '',
+      // Ajouter uniquement des témoignages authentiques et autorisés.
+      // Structure : { firstName: '', quote: '', photoUrl: '', result: '', resultDocumented: false }
+      // Une entrée n'est publiée que si firstName et quote sont renseignés.
+      testimonials: []
+    };
+  </script>
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #09090B; color: #FAFAFA; font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+    [hidden] { display: none !important; }
+    :focus-visible { outline: 3px solid #FFB47F; outline-offset: 5px; }
+    .hero-light { background: radial-gradient(ellipse at 50% 0%, rgba(255,122,26,.09), transparent 60%); }
+    .video-shell { aspect-ratio: 16 / 9; background: #18181B; isolation: isolate; box-shadow: 0 28px 90px rgba(0,0,0,.45); }
+    .video-shell iframe, .video-shell video { display: block; width: 100%; height: 100%; border: 0; }
+    .video-shell video { object-fit: contain; }
+    .video-cover { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 42%; }
+    .cover-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.15), rgba(0,0,0,.4) 65%, rgba(0,0,0,.85)); }
+    .testimonial-card { min-width: 0; overflow-wrap: anywhere; }
+    .testimonial-quote { line-height: 1.8; color: #E4E4E7; margin-top: 24px; }
+    .testimonial-result { margin-top: 24px; padding-top: 20px; border-top: 1px solid #303036; color: #FDBA74; font-size: .875rem; line-height: 1.6; }
+    .client-head { display: flex; align-items: center; gap: 14px; }
+    .client-avatar { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
+    .client-name { font-weight: 600; color: #FAFAFA; }
+    .conversion-panel { background: radial-gradient(ellipse at 50% 100%, rgba(255,122,26,.08), transparent 70%), #121215; }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
+  </style>
+</head>
+<body class="bg-ink font-sans text-zinc-50 antialiased">
+  <main>
+    <!-- SECTION 1 : HERO ET VIDÉO -->
+    <section id="hero" aria-labelledby="hero-title" class="hero-light px-5 pb-16 pt-14 sm:px-8 sm:pb-24 sm:pt-20">
+      <div class="mx-auto max-w-6xl">
+        <div class="mx-auto max-w-4xl text-center">
+          <p class="mb-6 text-[11px] font-semibold uppercase tracking-[.24em] text-orange-300 sm:text-xs">Coaching sportif · Votre objectif, votre rythme</p>
+          <h1 id="hero-title" class="text-[clamp(2rem,4.8vw,3.65rem)] font-semibold leading-[1.12] tracking-[-.04em]">Transformez votre physique <span class="text-accent">sans passer votre vie</span> à la salle de sport.</h1>
+          <p class="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-zinc-400 sm:text-lg">Découvrez comment retrouver la forme grâce à un accompagnement adapté à votre emploi du temps, à votre niveau et à vos objectifs.</p>
+        </div>
+        <div class="mx-auto mt-10 max-w-[960px] sm:mt-12">
+          <div id="video-shell" class="video-shell relative overflow-hidden rounded-2xl border border-white/10 sm:rounded-3xl">
+            <div id="video-mount" class="absolute inset-0" hidden></div>
+            <div id="video-cover-layer" class="absolute inset-0">
+              <img id="video-poster" class="video-cover" alt="Séance d’entraînement, photographie illustrative" width="1600" height="900" fetchpriority="high" hidden>
+              <div class="cover-shade" aria-hidden="true"></div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <button id="play-button" type="button" aria-label="Lire la vidéo de présentation" aria-controls="video-mount" class="flex h-16 w-16 items-center justify-center rounded-full border border-orange-300/30 bg-accent text-ink shadow-[0_8px_40px_rgba(255,122,26,.25)] transition-colors hover:bg-orange-400 sm:h-24 sm:w-24">
+                  <svg aria-hidden="true" viewBox="0 0 32 32" fill="currentColor" class="ml-1 h-7 w-7 sm:h-9 sm:w-9"><path d="M11 6.5a1 1 0 0 1 1.5-.86l15 9.5a1 1 0 0 1 0 1.72l-15 9.5A1 1 0 0 1 11 25.5z"/></svg>
+                </button>
+              </div>
+              <div class="pointer-events-none absolute inset-x-0 bottom-4 text-center sm:bottom-7">
+                <p class="text-xs font-medium tracking-wide text-white sm:text-sm">Découvrez l’accompagnement en vidéo</p>
+              </div>
+            </div>
+          </div>
+          <p id="video-notice" role="status" aria-live="polite" class="mt-4 text-center text-sm leading-relaxed text-orange-200" hidden></p>
+          <p class="mt-5 text-center text-xs leading-relaxed text-zinc-400">Lancez la vidéo pour découvrir l’approche et l’accompagnement.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2 : PREUVES SOCIALES -->
+    <section id="temoignages" aria-labelledby="proof-title" class="border-y border-white/[.07] bg-[#0E0E11] px-5 py-16 sm:px-8 sm:py-24">
+      <div class="mx-auto max-w-6xl">
+        <div class="mx-auto max-w-2xl text-center">
+          <div aria-hidden="true" class="mx-auto mb-6 h-1 w-10 rounded-full bg-accent"></div>
+          <h2 id="proof-title" class="text-3xl font-semibold leading-tight tracking-[-.035em] sm:text-4xl">Ils ont décidé de changer. Voici leur expérience.</h2>
+          <p class="mt-5 text-base leading-relaxed text-zinc-400">Découvrez les témoignages de personnes accompagnées dans leur transformation physique.</p>
+        </div>
+        <p id="proof-placeholder-notice" class="mx-auto mt-8 max-w-2xl text-center text-sm leading-relaxed text-orange-200">Les cartes ci-dessous sont des emplacements de démonstration à remplacer. Aucun témoignage client n’est encore publié.</p>
+        <div id="testimonials-grid" class="mt-8 grid grid-cols-1 gap-5 lg:grid-cols-3">
+          <article class="testimonial-card rounded-2xl border border-dashed border-zinc-700 bg-panel p-7 sm:p-8">
+            <p class="text-[10px] font-semibold uppercase tracking-[.18em] text-orange-300">Exemple à remplacer · 01</p>
+            <div class="mt-6 flex items-center gap-4"><div aria-hidden="true" class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-zinc-700 text-zinc-500"><svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 21v-2a7 7 0 0 1 14 0v2"/></svg></div><h3 class="font-medium text-zinc-300">Prénom du client</h3></div>
+            <p class="mt-6 text-sm leading-7 text-zinc-400">Insérez ici son témoignage authentique, avec son autorisation de publication.</p>
+            <p class="mt-6 border-t border-white/[.07] pt-5 text-xs leading-relaxed text-zinc-500">Photo réelle facultative. Résultat uniquement s’il est documenté.</p>
+          </article>
+          <article class="testimonial-card rounded-2xl border border-dashed border-zinc-700 bg-panel p-7 sm:p-8">
+            <p class="text-[10px] font-semibold uppercase tracking-[.18em] text-orange-300">Exemple à remplacer · 02</p>
+            <div class="mt-6 flex items-center gap-4"><div aria-hidden="true" class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-zinc-700 text-zinc-500"><svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 21v-2a7 7 0 0 1 14 0v2"/></svg></div><h3 class="font-medium text-zinc-300">Prénom du client</h3></div>
+            <p class="mt-6 text-sm leading-7 text-zinc-400">Insérez ici son témoignage authentique, avec son autorisation de publication.</p>
+            <p class="mt-6 border-t border-white/[.07] pt-5 text-xs leading-relaxed text-zinc-500">Photo réelle facultative. Résultat uniquement s’il est documenté.</p>
+          </article>
+          <article class="testimonial-card rounded-2xl border border-dashed border-zinc-700 bg-panel p-7 sm:p-8">
+            <p class="text-[10px] font-semibold uppercase tracking-[.18em] text-orange-300">Exemple à remplacer · 03</p>
+            <div class="mt-6 flex items-center gap-4"><div aria-hidden="true" class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-zinc-700 text-zinc-500"><svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 21v-2a7 7 0 0 1 14 0v2"/></svg></div><h3 class="font-medium text-zinc-300">Prénom du client</h3></div>
+            <p class="mt-6 text-sm leading-7 text-zinc-400">Insérez ici son témoignage authentique, avec son autorisation de publication.</p>
+            <p class="mt-6 border-t border-white/[.07] pt-5 text-xs leading-relaxed text-zinc-500">Photo réelle facultative. Résultat uniquement s’il est documenté.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3 : CONVERSION -->
+    <section id="commencer" aria-labelledby="cta-title" class="px-5 py-16 sm:px-8 sm:py-24">
+      <div class="conversion-panel mx-auto max-w-5xl rounded-3xl border border-white/10 px-6 py-12 text-center sm:px-12 sm:py-16">
+        <div aria-hidden="true" class="mx-auto mb-7 flex h-11 w-11 items-center justify-center rounded-xl border border-orange-400/20 bg-orange-500/10 text-accent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="h-6 w-6"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        <h2 id="cta-title" class="mx-auto max-w-2xl text-3xl font-semibold leading-tight tracking-[-.035em] sm:text-4xl">Votre transformation commence par une décision.</h2>
+        <p class="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-zinc-400">Vous avez découvert notre approche. Si vous souhaitez passer à l'action, faites le premier pas vers vos objectifs physiques.</p>
+        <a id="booking-link" role="link" tabindex="0" aria-disabled="true" aria-describedby="cta-reassurance" class="mx-auto mt-9 flex min-h-[64px] w-full max-w-xl cursor-pointer items-center justify-center gap-3 rounded-xl bg-accent px-5 py-5 text-[12px] font-extrabold leading-relaxed tracking-wide text-ink shadow-[0_8px_32px_rgba(255,122,26,.12)] transition-colors hover:bg-orange-400 sm:text-sm">
+          <span>JE VEUX COMMENCER MON ACCOMPAGNEMENT</span>
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="hidden h-5 w-5 shrink-0 sm:block"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <p id="cta-reassurance" class="mx-auto mt-5 max-w-lg text-xs leading-relaxed text-zinc-400">Prenez le temps de choisir un accompagnement adapté à vos besoins.</p>
+        <p id="booking-notice" role="status" aria-live="polite" class="mt-4 text-sm text-orange-200" hidden></p>
+        <noscript><p class="mt-5 text-sm text-orange-200">Activez JavaScript pour charger la vidéo et accéder au lien de prise de contact.</p></noscript>
+      </div>
+    </section>
+  </main>
+  <script>
+    (() => {
+      'use strict';
+      const config = window.PAGE_CONFIG || {};
+      const byId = id => document.getElementById(id);
+      const text = value => typeof value === 'string' ? value.trim() : '';
+      const safeUrl = value => {
+        if (!text(value)) return '';
+        try {
+          const url = new URL(text(value), window.location.href);
+          return ['https:', 'http:'].includes(url.protocol) ? url.href : '';
+        } catch (_) { return ''; }
+      };
+      const notice = (id, message) => {
+        const el = byId(id);
+        el.textContent = message;
+        el.hidden = !message;
+      };
+      const poster = byId('video-poster');
+      const posterUrl = safeUrl(config.posterUrl);
+      if (posterUrl) {
+        poster.addEventListener('error', () => { poster.hidden = true; });
+        poster.src = posterUrl;
+        poster.hidden = false;
+      }
+
+      // Les vidéos tierces ne sont intégrées qu'après un clic sur Lecture.
+      function resolveVideo(value) {
+        const normalized = safeUrl(value);
+        if (!normalized) return null;
+        const url = new URL(normalized);
+        const host = url.hostname.toLowerCase().replace(/^www\./, '');
+        const segments = url.pathname.split('/').filter(Boolean);
+        const youtubeHosts = ['youtube.com', 'm.youtube.com', 'youtube-nocookie.com', 'youtu.be'];
+        if (youtubeHosts.includes(host)) {
+          const id = host === 'youtu.be' ? segments[0] : (url.searchParams.get('v') || (['embed', 'shorts', 'live'].includes(segments[0]) ? segments[1] : ''));
+          if (!/^[a-zA-Z0-9_-]{11}$/.test(id || '')) return null;
+          return { type: 'embed', url: 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&playsinline=1&rel=0' };
+        }
+        if (['vimeo.com', 'player.vimeo.com'].includes(host)) {
+          const index = segments.findIndex(part => /^\d+$/.test(part));
+          if (index < 0) return null;
+          const embed = new URL('https://player.vimeo.com/video/' + segments[index]);
+          embed.searchParams.set('autoplay', '1');
+          embed.searchParams.set('dnt', '1');
+          const hash = url.searchParams.get('h') || segments[index + 1];
+          if (hash && /^[a-zA-Z0-9]+$/.test(hash)) embed.searchParams.set('h', hash);
+          return { type: 'embed', url: embed.href };
+        }
+        return { type: 'file', url: normalized };
+      }
+      const mount = byId('video-mount');
+      const cover = byId('video-cover-layer');
+      const play = byId('play-button');
+      function restorePlayer(message) {
+        const wasFocused = mount.contains(document.activeElement);
+        mount.replaceChildren();
+        mount.hidden = true;
+        cover.hidden = false;
+        play.disabled = false;
+        notice('video-notice', message);
+        if (wasFocused) play.focus({ preventScroll: true });
+      }
+      play.addEventListener('click', async () => {
+        const source = resolveVideo(config.videoUrl);
+        if (!source) {
+          notice('video-notice', text(config.videoUrl) ? 'Le lien vidéo n’est pas valide. Veuillez réessayer ultérieurement.' : 'La vidéo de présentation n’est pas encore disponible.');
+          return;
+        }
+        notice('video-notice', '');
+        play.disabled = true;
+        cover.hidden = true;
+        mount.hidden = false;
+        if (source.type === 'embed') {
+          const frame = document.createElement('iframe');
+          frame.title = 'Présentation vidéo du coaching sportif';
+          frame.allow = 'autoplay; fullscreen; picture-in-picture; encrypted-media';
+          frame.allowFullscreen = true;
+          frame.referrerPolicy = 'strict-origin-when-cross-origin';
+          frame.src = source.url;
+          frame.addEventListener('error', () => restorePlayer('La vidéo ne peut pas être chargée pour le moment.'));
+          mount.replaceChildren(frame);
+          frame.focus({ preventScroll: true });
+        } else {
+          const video = document.createElement('video');
+          video.controls = true;
+          video.playsInline = true;
+          video.preload = 'metadata';
+          video.tabIndex = 0;
+          video.setAttribute('aria-label', 'Présentation vidéo du coaching sportif');
+          if (posterUrl) video.poster = posterUrl;
+          const captionsUrl = safeUrl(config.captionsUrl);
+          if (captionsUrl) {
+            video.crossOrigin = 'anonymous';
+            const track = document.createElement('track');
+            track.kind = 'captions';
+            track.srclang = 'fr';
+            track.label = 'Français';
+            track.src = captionsUrl;
+            track.default = true;
+            video.appendChild(track);
+          }
+          video.src = source.url;
+          video.addEventListener('error', () => restorePlayer('La vidéo ne peut pas être lue pour le moment. Vérifiez votre connexion, puis réessayez.'));
+          video.addEventListener('playing', () => notice('video-notice', ''));
+          mount.replaceChildren(video);
+          video.focus({ preventScroll: true });
+          try { await video.play(); }
+          catch (_) {
+            if (mount.contains(video)) notice('video-notice', 'Utilisez les commandes du lecteur pour lancer la vidéo.');
+          }
+        }
+      });
+
+      const booking = byId('booking-link');
+      const bookingUrl = safeUrl(config.bookingUrl);
+      if (bookingUrl) {
+        booking.href = bookingUrl;
+        booking.removeAttribute('aria-disabled');
+        booking.removeAttribute('role');
+        booking.removeAttribute('tabindex');
+      }
+      booking.addEventListener('click', event => {
+        if (!bookingUrl) {
+          event.preventDefault();
+          notice('booking-notice', 'Le lien de prise de contact n’est pas encore disponible.');
+        }
+      });
+      booking.addEventListener('keydown', event => {
+        if (!bookingUrl && event.key === 'Enter') { event.preventDefault(); booking.click(); }
+      });
+
+      // Rendu sécurisé des témoignages : aucune interpolation HTML de leur contenu.
+      const testimonials = Array.isArray(config.testimonials) ? config.testimonials.filter(item => item && text(item.firstName) && text(item.quote)) : [];
+      if (testimonials.length) {
+        const grid = byId('testimonials-grid');
+        grid.replaceChildren();
+        byId('proof-placeholder-notice').hidden = true;
+        testimonials.forEach(item => {
+          const card = document.createElement('article');
+          card.className = 'testimonial-card rounded-2xl border border-white/10 bg-panel p-7 sm:p-8';
+          const head = document.createElement('div');
+          head.className = 'client-head';
+          const photoUrl = safeUrl(item.photoUrl);
+          if (photoUrl) {
+            const photo = document.createElement('img');
+            photo.className = 'client-avatar';
+            photo.src = photoUrl;
+            photo.alt = 'Portrait de ' + text(item.firstName);
+            photo.loading = 'lazy';
+            photo.width = 48;
+            photo.height = 48;
+            photo.addEventListener('error', () => photo.remove());
+            head.appendChild(photo);
+          }
+          const name = document.createElement('h3');
+          name.className = 'client-name';
+          name.textContent = text(item.firstName);
+          head.appendChild(name);
+          const quote = document.createElement('blockquote');
+          quote.className = 'testimonial-quote';
+          quote.textContent = '« ' + text(item.quote) + ' »';
+          card.append(head, quote);
+          if (item.resultDocumented === true && text(item.result)) {
+            const result = document.createElement('p');
+            result.className = 'testimonial-result';
+            result.textContent = text(item.result);
+            card.appendChild(result);
+          }
+          grid.appendChild(card);
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
